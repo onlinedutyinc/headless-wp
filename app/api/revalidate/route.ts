@@ -12,31 +12,17 @@ export const maxDuration = 30;
 export async function POST(request: NextRequest) {
   try {
     const requestBody = await request.json();
-   /** const secret = request.headers.get("x-webhook-secret");
-
-   * if (secret !== process.env.WORDPRESS_WEBHOOK_SECRET) {
-   *   console.error("Invalid webhook secret");
-   *   return NextResponse.json(
-   *     { message: "Invalid webhook secret" },
-   *     { status: 401 }
-   *   );
-   * }
-*/
-    //new
-const secret = request.headers.get("x-webhook-secret") || request.nextUrl.searchParams.get("secret");
-    
-    console.log("DEBUG: Secret received is:", secret);
-    console.log("DEBUG: Expected secret is:", process.env.WORDPRESS_WEBHOOK_SECRET);
+    const secret = request.headers.get("x-webhook-secret");
 
     if (secret !== process.env.WORDPRESS_WEBHOOK_SECRET) {
       console.error("Invalid webhook secret");
       return NextResponse.json(
-        { message: "Invalid webhook secret", received: secret },
+        { message: "Invalid webhook secret" },
         { status: 401 }
       );
     }
 
-    //end new
+
     const { contentType, contentId } = requestBody;
 
     if (!contentType) {
