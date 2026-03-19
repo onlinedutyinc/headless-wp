@@ -22,6 +22,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
+
     const { contentType, contentId } = requestBody;
 
     if (!contentType) {
